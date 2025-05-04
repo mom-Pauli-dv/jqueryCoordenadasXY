@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas del CLICK con JQuery </title>
+</head>
+<body>
+    <h1 id="Titulo"> el click esta vinculado solo al $ h1 </h1>
+    <img id="mapa" ancho="400" alto="400" src="./imagenes/treasuremap.jpg" alt="Mapa del tesoro">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        var clickHandler = function(event) {
+            document.write("Click " + "X = " + event.pageX + " Y = " + event.pageY);
+            document.write ("Cargar pagina de nuevo para otra coordenada");
+        }
+        $("h1").click(clickHandler);
+
+        </script>
+</body>
+</html>
+
+
+
