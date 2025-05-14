@@ -3,22 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas del CLICK con JQuery </title>
+    <title>El tesoro escondido</title>
 </head>
 <body>
-    <h1 id="Titulo"> el click esta vinculado solo al $ h1 </h1>
-    <img id="mapa" ancho="400" alto="400" src="./imagenes/treasuremap.jpg" alt="Mapa del tesoro">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        var clickHandler = function(event) {
-            document.write("Click " + "X = " + event.pageX + " Y = " + event.pageY);
-            document.write ("Cargar pagina de nuevo para otra coordenada");
-        }
-        $("h1").click(clickHandler);
+  <h1 id="titulo">Encuentre el tesoro escondido!</h1>
+  <img id="mapa" ancho="400" alto="400"
+       src="./imagenes/treasuremap.jpg">
+  <p id="distancia"></p>
+  <p id="clicks"></p>
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+    // Encuentra un número al azar entre 0 y valor
+    var numeroAzar = function (valor) {
+      return Math.floor(Math.random() * valor);
+    };
 
-        </script>
+    // Calcula distancia entre click event y tesoro
+    var traeDistancia = function (event, tesoro) {
+      var diffX = event.offsetX - tesoro.x;
+      var diffY = event.offsetY - tesoro.y;
+      return Math.sqrt((diffX * diffX) + (diffY * diffY));
+    };
+
+    // Genera un string representando la diferencia
+    var traeAyuda = function (distancia) {
+      if (distancia < 15) {
+        return "¡Quemando!";
+      } else if (distancia < 20) {
+        return "Muy Caliente";
+      } else if (distancia < 40) {
+        return "Caliente";
+      } else if (distancia < 80) {
+        return "Tibio";
+      } else if (distancia < 160) {
+        return "Frio!";
+        } else if (distancia < 320) {
+        return "Congelado!";
+      }
+    };
+
+    // Establece el manejo de click para la imagen del mapa
+    $("#mapa").click(function (event) {
+      clicks = clicks + 1;
+      // Obtiene la distancia entre el click y el tesoro
+      var distancia = traeDistancia(event, tesoro);
+      // Convierte la distancia a un mensaje de ayuda
+      var ayudaDistancia = traeAyuda(distancia);
+      // Actualiza el elemento #distancia con el mensaje
+      $("#distancia").text(ayudaDistancia);
+
+      // Actualiza el número de clicks
+      $("#clicks").text("Número de clicks: " + clicks);
+
+      // Si el jugador está lo suficientemente cerca, felicítalo
+      if (distancia < 15) {
+        alert("¡Encontraste el tesoro en " + clicks + " clicks!");
+      }
+    });
+
+    // Obtiene dimensiones de la imagen
+    var ancho = $("#mapa").width();
+    var alto = $("#mapa").height();
+
+    // Crea una posición al azar para el tesoro
+    var tesoro = {
+      x: numeroAzar(ancho),
+      y: numeroAzar(alto)
+    };
+
+    // Contador de clicks
+    var clicks = 0;
+    $("#clicks").text("Número de clicks: 0");
+  </script>
 </body>
 </html>
-
 
 
